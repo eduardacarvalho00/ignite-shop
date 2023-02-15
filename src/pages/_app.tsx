@@ -1,9 +1,8 @@
-import { theme } from '@/styles/theme'
-import { ChakraProvider, Box} from '@chakra-ui/react'
-import type { AppProps } from 'next/app'
-import Image from 'next/legacy/image'
-import logo from '../assets/logo.png'
-
+import { ChakraProvider, Box } from '@chakra-ui/react';
+import type { AppProps } from 'next/app';
+import Image from 'next/legacy/image';
+import { theme } from '@/styles/theme';
+import logo from '../assets/logo.png';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -21,5 +20,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>
-  )
+  );
 }

@@ -1,11 +1,7 @@
-import { Center, Heading } from '@chakra-ui/react'
-import { Roboto } from '@next/font/google'
-
+import { Box } from '@chakra-ui/react';
 
 export default function Home() {
   return (
-      <Center>
-        <Heading>oie</Heading>
-      </Center>
-  )
+    <Box></Box>
+  );
 }

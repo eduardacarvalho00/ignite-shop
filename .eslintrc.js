@@ -5,8 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb',
+    'airbnb-base',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,7 +16,6 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react',
     '@typescript-eslint',
   ],
   rules: {
