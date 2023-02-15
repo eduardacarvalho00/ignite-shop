@@ -17,12 +17,18 @@ export const theme = extendTheme({
     green: {
       500: '#00875f',
       300: '#00b37e',
+      200: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
     },
   },
   fonts: {
     heading: 'Roboto',
     body: 'Roboto',
-
+  },
+  fontSizes: {
+    md: '1.125rem',
+    lg: '1.25rem',
+    xl: '1.5rem',
+    '2xl': '2rem',
   },
   styles: {
     global: {
