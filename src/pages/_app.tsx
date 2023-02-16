@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
         justifyContent='center'
         minHeight='100vh'
       >
-        <Box as='header' p='2rem 0' w='100%' maxW='1180' margin='0 auto'>
+        <Box as='header' p='2rem 0' w='100%' maxW='1480' margin='0 auto'>
          
           <Image src={logo.src} width="130" height="52"/>
         </Box>
