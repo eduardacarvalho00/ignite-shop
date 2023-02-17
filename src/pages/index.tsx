@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Box, Flex, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import Image from 'next/legacy/image';
 import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
@@ -31,31 +32,33 @@ export default function Home({ products } : HomeProps) {
       >
         {products.map((product) => (
           <SwiperSlide id={product.id}>
-            <Box 
-              bg='green.200'
-              borderRadius='8' 
-              h='100%'
-            >
-              <Flex as='a' href='#' justifyContent='center'>
-                <Image src={product.imageUrl} width={520} height={480} alt='' objectFit='cover'/>
+            <Link href={`/product/${product.id}`} >
+              <Box 
+                bg='green.200'
+                borderRadius='8' 
+                h='100%'
+              >
+                <Flex justifyContent='center'>
+                  <Image src={product.imageUrl} width={520} height={480} alt='' objectFit='cover'/>
 
-                <Flex
-                  alignItems='center'
-                  justifyContent='space-between'
-                  position='absolute'
-                  bottom='0.25rem'
-                  left='0.25rem'
-                  right='0.25rem'
-                  p='2rem'
-                  borderRadius={6}
-                  bg='rgba(0, 0, 0, 0.6)'
-                >
-                  <Text as='b' fontSize='lg'>{product.name}</Text>
-                  <Text as='b' fontSize='xl' color='green.300'>{product.price}</Text>
+                  <Flex
+                    alignItems='center'
+                    justifyContent='space-between'
+                    position='absolute'
+                    bottom='0.25rem'
+                    left='0.25rem'
+                    right='0.25rem'
+                    p='2rem'
+                    borderRadius={6}
+                    bg='rgba(0, 0, 0, 0.6)'
+                  >
+                    <Text as='b' fontSize='lg'>{product.name}</Text>
+                    <Text as='b' fontSize='xl' color='green.300'>{product.price}</Text>
+                  </Flex>
+
                 </Flex>
-
-              </Flex>
-            </Box>
+              </Box>
+            </Link>
           </SwiperSlide>
         ))}
        
