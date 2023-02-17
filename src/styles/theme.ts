@@ -32,6 +32,7 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
+      boxSizing: 'border-box',
       'html::-webkit-scrollbar': {
         bg: 'blackAlpha.300',
         w: '8px', 
