@@ -3,7 +3,6 @@ import {
 } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/legacy/image';
-import { useRouter } from 'next/router';
 import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
 
