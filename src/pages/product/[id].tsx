@@ -1,9 +1,10 @@
 import {
-  Heading, Text, Button, Grid, GridItem, 
+  Heading, Text, Button, Grid, GridItem, Center, Spinner, 
 } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/legacy/image';
 import Stripe from 'stripe';
+import { useRouter } from 'next/router';
 import { stripe } from '@/lib/stripe';
 
 interface ProductProps{
@@ -17,6 +18,21 @@ interface ProductProps{
 }
 
 export default function Product({ product } : ProductProps) {
+  const { isFallback } = useRouter();
+
+  if (isFallback) {
+    return (
+      <Center h='90vh'>
+        <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.300'
+          color='green.300'
+          size='xl'
+        />
+      </Center>
+    );
+  }
   return (
     <Grid templateColumns='repeat(2, 1fr)' gap={5} maxW='1380px' margin='0 auto'>
       <GridItem
@@ -65,9 +81,9 @@ export default function Product({ product } : ProductProps) {
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [
-      { params: { id: 'pro' } },
+      { params: { id: 'prod_NMsKdDdHmDY0HL' } },
     ],
-    fallback: false,
+    fallback: true,
   };
 };
 

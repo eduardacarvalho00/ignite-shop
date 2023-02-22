@@ -32,7 +32,7 @@ export default function Home({ products } : HomeProps) {
       >
         {products.map((product) => (
           <SwiperSlide id={product.id}>
-            <Link href={`/product/${product.id}`} >
+            <Link href={`/product/${product.id}`} prefetch={false}>
               <Box 
                 bg='green.200'
                 borderRadius='8' 
