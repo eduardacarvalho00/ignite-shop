@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import {
   Heading, Text, Button, Grid, GridItem, Center, Spinner, 
 } from '@chakra-ui/react';
@@ -5,6 +6,8 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/legacy/image';
 import Stripe from 'stripe';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { useState } from 'react';
 import { stripe } from '@/lib/stripe';
 
 interface ProductProps{
@@ -20,6 +23,7 @@ interface ProductProps{
 
 export default function Product({ product } : ProductProps) {
   const { isFallback } = useRouter();
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
 
   if (isFallback) {
     return (
@@ -35,8 +39,19 @@ export default function Product({ product } : ProductProps) {
     );
   }
 
-  function Teste() {
-    console.log(product.defaultPriceId);
+  async function HandleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true);
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      });
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl; // página fora da aplicação
+    } catch (err) {
+      setIsCreatingCheckoutSession(false);
+      alert('Falha ao redirecionar ao checkout!');
+    }
   }
   return (
     <Grid templateColumns='repeat(2, 1fr)' gap={5} maxW='1380px' margin='0 auto'>
@@ -77,7 +92,20 @@ export default function Product({ product } : ProductProps) {
           {product.description}
         </Text>
 
-        <Button w='100%' h='70px' colorScheme='green' mt='auto' onClick={Teste}>Comprar agora</Button>
+        <Button
+          w='100%'
+          h='70px'
+          colorScheme='green'
+          mt='auto'
+          disabled={isCreatingCheckoutSession}
+          onClick={() => HandleBuyProduct()}
+          _disabled={{
+            opacity: 0.6,
+            cursor: 'not-allowed',
+          }}
+        >
+            Comprar agora
+        </Button>
       </GridItem>
     </Grid>
   );
