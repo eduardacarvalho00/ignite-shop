@@ -13,7 +13,8 @@ interface ProductProps{
     name: string,
     imageUrl: string,
     price: string,
-    description: string
+    description: string,
+    defaultPriceId: string
   }
 }
 
@@ -32,6 +33,10 @@ export default function Product({ product } : ProductProps) {
         />
       </Center>
     );
+  }
+
+  function Teste() {
+    console.log(product.defaultPriceId);
   }
   return (
     <Grid templateColumns='repeat(2, 1fr)' gap={5} maxW='1380px' margin='0 auto'>
@@ -72,7 +77,7 @@ export default function Product({ product } : ProductProps) {
           {product.description}
         </Text>
 
-        <Button w='100%' h='70px' colorScheme='green' mt='auto'>Comprar agora</Button>
+        <Button w='100%' h='70px' colorScheme='green' mt='auto' onClick={Teste}>Comprar agora</Button>
       </GridItem>
     </Grid>
   );
@@ -112,6 +117,7 @@ export const getStaticProps: GetStaticProps<any, {id : string}> = async ({ param
           currency: 'BRL',
         }).format(price.unit_amount! / 100),
         description: product.description,
+        defaultPriceId: price.id,
       },
     },
     revalidate: 60 * 60 * 1, // 1 hour
