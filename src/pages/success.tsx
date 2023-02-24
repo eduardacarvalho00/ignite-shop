@@ -4,9 +4,18 @@ import {
 import { GetServerSideProps } from 'next';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
+import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
 
-export default function Success() {
+interface SuccessProps{
+  customerName: string;
+  product:{
+    name: string;
+    imageUrl: string;
+  }
+}
+
+export default function Success({ customerName, product }: SuccessProps) {
   return (
     <Flex
       flexDir='column'
@@ -28,7 +37,7 @@ export default function Success() {
         justify='center'
         height={145}
       >
-        <Image src='' objectFit='cover' />
+        <Image src={product.imageUrl} width={130} height={150} objectFit='cover' alt='' />
       </Flex>
 
       <Text
@@ -39,7 +48,7 @@ export default function Success() {
         mt='2rem'
         lineHeight='1.4'
       >
-        Uhuul <strong>Duda,</strong> sua <strong>Camiseta Palestra React</strong> já está a caminho da sua casa.
+        Uhuul <strong>{customerName},</strong> sua <strong>{product.name}</strong> já está a caminho da sua casa.
       </Text>
 
       <Link 
@@ -59,13 +68,31 @@ export default function Success() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  if (!query.session_id) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   const sessionId = String(query.session_id);
 
   const session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ['line_items'],
+    expand: ['line_items', 'line_items.data.price.product'],
   });
 
+  const customerName = session.customer_details.name;
+  const product = session.line_items.data[0].price.product as Stripe.Product;
+
   return {
-    props: {},
+    props: {
+      customerName,
+      product: {
+        name: product.name,
+        imageUrl: product.images[0],
+      },
+    },
   };
 };
