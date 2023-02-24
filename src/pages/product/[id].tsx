@@ -44,6 +44,10 @@ export default function Product({ product } : ProductProps) {
       setIsCreatingCheckoutSession(true);
       const response = await axios.post('/api/checkout', {
         priceId: product.defaultPriceId,
+        headers: {
+          Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
       });
       const { checkoutUrl } = response.data;
 
